@@ -16,6 +16,7 @@ app = Application.builder().token(TOKEN).build()
 
 # Обработчик команды /start
 async def start(update: Update, context: CallbackContext):
+    # Исправлена строка с кавычками
     await update.message.reply_text('Dnipro Alerts will notify you about "дніпро", "дніпра", "ігрені", "павлоград", "павлограду", "павлограда" only')
 
 # Фильтрация сообщений
