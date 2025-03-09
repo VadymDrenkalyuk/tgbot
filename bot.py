@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import Application, MessageHandler, CommandHandler, filters
+from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from telegram.ext import CallbackContext
 
 # Твой токен бота от BotFather
@@ -16,7 +16,7 @@ app = Application.builder().token(TOKEN).build()
 
 # Обработчик команды /start
 async def start(update: Update, context: CallbackContext):
-    await update.message.reply_text("Dnipro Alerts will notify you about "дніпро", "дніпра", "ігрені", "павлоград", "павлограду", "павлограда" only")
+    await update.message.reply_text('Dnipro Alerts will notify you about "дніпро", "дніпра", "ігрені", "павлоград", "павлограду", "павлограда" only')
 
 # Фильтрация сообщений
 async def filter_messages(update: Update, context: CallbackContext):
