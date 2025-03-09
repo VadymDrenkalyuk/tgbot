@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler, filters
+from telegram.ext import Application, MessageHandler, CommandHandler, filters
 from telegram.ext import CallbackContext
 
 # Твой токен бота от BotFather
@@ -16,16 +16,22 @@ app = Application.builder().token(TOKEN).build()
 
 # Обработчик команды /start
 async def start(update: Update, context: CallbackContext):
-    # Исправлена строка с кавычками
-    await update.message.reply_text('Dnipro Alerts will notify you about "дніпро", "дніпра", "ігрені", "ігрень", "павлоград", "павлограду", "Придніпровськ", "Іларіонове", "Приднік", "павлограда" only')
+    await update.message.reply_text("Dnipro Alerts will notify you about: дніпро, дніпра, ігрени, павлоград, павлограду, павлограда")
 
 # Фильтрация сообщений
 async def filter_messages(update: Update, context: CallbackContext):
     """Обрабатывает новые сообщения и пересылает только нужные"""
     text = update.message.text.lower()
+
+    # Печатаем для отладки
+    print(f"Получено сообщение: {text}")
     
+    # Если сообщение содержит хотя бы одно из ключевых слов, пересылаем его
     if any(keyword in text for keyword in KEYWORDS):
+        # Отправляем сообщение с пометкой, что оно прошло фильтр
         await context.bot.send_message(chat_id=update.effective_chat.id, text=f"📢 Фильтр: {update.message.text}")
+    else:
+        print("Сообщение не содержит ключевых слов.")
 
 # Добавляем обработчик команды /start
 app.add_handler(CommandHandler("start", start))
@@ -36,3 +42,4 @@ app.add_handler(MessageHandler(filters.TEXT & filters.Chat(CHANNEL_ID), filter_m
 # Запуск бота
 print("Bot started!")
 app.run_polling()
+
